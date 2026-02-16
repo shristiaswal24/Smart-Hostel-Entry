@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Entry History</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<h2>Hostel Entry History</h2>
+
+<table border="1" id="historyTable">
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Roll No</th>
+      <th>Room No</th>
+      <th>Entry Time</th>
+    </tr>
+  </thead>
+  <tbody></tbody>
+</table>
+
+<script>
+async function loadHistory() {
+  const response = await fetch("/history");
+  const data = await response.json();
+
+  const tableBody = document.querySelector("#historyTable tbody");
+  tableBody.innerHTML = "";
+
+  data.forEach(entry => {
+    const row = `
+      <tr>
+        <td>${entry.name}</td>
+        <td>${entry.rollNo}</td>
+        <td>${entry.roomNo}</td>
+        <td>${new Date(entry.entryTime).toLocaleString()}</td>
+      </tr>
+    `;
+    tableBody.innerHTML += row;
+  });
+}
+
+loadHistory();
+</script>
+
+</body>
+</html>
